@@ -78,6 +78,6 @@ First, run the `DataDog Agent` (requires an `API_KEY`). For example, using Docke
 
 Then, use the included CLI to validate connectivity:
 
-    publish-metric --statsd datadog_statsd --host $(docker-machine ip default)
+    publish-metric --statsd datadog --host $(docker-machine ip default)
 
 The resulting metric should appear in `DataDog` "Metric Summary" right away.
