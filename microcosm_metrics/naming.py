@@ -4,5 +4,15 @@ Naming conventions.
 """
 
 
-def name_for(key, prefix="microcosm"):
-    return "{}.{}".format(prefix, key)
+CALL = "call"
+FAILURE = "failure"
+IGNORE = "ignore"
+SUCCESS = "success"
+
+
+def name_for(*keys, prefix="microcosm"):
+    """
+    Concatenate a metric name.
+
+    """
+    return ".".join([prefix] + list(keys))

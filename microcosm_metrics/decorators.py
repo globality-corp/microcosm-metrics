@@ -5,7 +5,40 @@ Metrics decorators.
 from functools import wraps
 from time import time
 
+from microcosm_metrics.classifier import Classifier
 from microcosm_metrics.naming import name_for
+
+
+def configure_metrics_counting(graph):
+    """
+    Configure a counting decorator.
+
+    """
+    def metrics_counting(name, classifier_cls=Classifier):
+        """
+        Create a decorator that counts a specific context.
+
+        """
+        def decorator(func):
+            @wraps(func)
+            def wrapper(*args, **kwargs):
+                classifier = Classifier(func)
+                try:
+                    return classifier(*args, **kwargs)
+                finally:
+                    if classifier.label is not None:
+                        # NB: the statsd client doesn't actually have this interface
+                        graph.metrics.increment(
+                            name_for(
+                                name,
+                                classifier.label,
+                                "count",
+                                prefix=graph.metadata.name,
+                            ),
+                        )
+            return wrapper
+        return decorator
+    return metrics_counting
 
 
 def configure_metrics_timing(graph):
@@ -28,7 +61,7 @@ def configure_metrics_timing(graph):
                     end_time = time()
                     # NB: the statsd client doesn't actually have this interface
                     graph.metrics.histogram(
-                        name_for(name),
+                        name_for(name, prefix=graph.metadata.name),
                         end_time - start_time,
                     )
             return wrapper

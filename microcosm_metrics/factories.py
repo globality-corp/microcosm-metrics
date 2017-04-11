@@ -2,6 +2,8 @@
 Factories for statsd/metrics clients.
 
 """
+from types import MethodType
+
 from datadog import DogStatsd
 from microcosm.api import defaults
 from statsd import StatsClient
@@ -36,6 +38,15 @@ def configure_statsd(graph):
         host=graph.config.datadog_statsd.host,
         port=graph.config.datadog_statsd.port,
     )
+
+    if not graph.metadata.testing:
+        # We have different interfaces between the StatsClient and DogStatsd. Try to adapt the
+        # former to the latter for the decorator use cases.
+        def histogram(self, stat, value, rate=1):
+            return self._send_stat(stat, "{}|h".format(value), rate)
+
+        statsd.increment = statsd.incr
+        statsd.histogram = MethodType(histogram, statsd)
 
     return attach(graph, statsd)
 
