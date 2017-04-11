@@ -27,7 +27,6 @@ def configure_metrics_counting(graph):
                     return classifier(*args, **kwargs)
                 finally:
                     if classifier.label is not None:
-                        # NB: the statsd client doesn't actually have this interface
                         graph.metrics.increment(
                             name_for(
                                 name,
@@ -59,7 +58,6 @@ def configure_metrics_timing(graph):
                     return func(*args, **kwargs)
                 finally:
                     end_time = time()
-                    # NB: the statsd client doesn't actually have this interface
                     graph.metrics.histogram(
                         name_for(name, prefix=graph.metadata.name),
                         end_time - start_time,
