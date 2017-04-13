@@ -17,7 +17,7 @@ setup(
     keywords="microcosm",
     install_requires=[
         "datadog>=0.15.0",
-        "microcosm>=0.17.0",
+        "microcosm>=0.17.2",
         "microcosm-logging>=0.13.0",
         "statsd>=3.2.1",
     ],

@@ -14,8 +14,7 @@ def attach(graph, statsd):
     Attach statsd client to `metrics` key for pseudo polymorphism.
 
     """
-    graph._cache["metrics"] = statsd
-    return statsd
+    return graph.assign("metrics", statsd)
 
 
 @defaults(
