@@ -22,7 +22,7 @@ def configure_metrics_counting(graph):
         def decorator(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
-                classifier = Classifier(func)
+                classifier = classifier_cls(func)
                 try:
                     return classifier(*args, **kwargs)
                 finally:
