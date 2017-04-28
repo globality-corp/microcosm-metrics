@@ -103,4 +103,5 @@ def test_metrics_timing_with_tags():
 
     assert_that(name, is_(equal_to("example.foo")))
     assert_that(value, is_(greater_than(1.0)))
-    assert_that(kwargs, is_(equal_to(dict(tags=["same", "-prefix"]))))
+    assert_that((kwargs.keys(), is_(equal_to("tags"))))
+    assert_that(sorted(kwargs["tags"]), is_(equal_to(sorted(["same", "-prefix"]))))
