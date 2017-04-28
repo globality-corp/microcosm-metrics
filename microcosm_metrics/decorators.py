@@ -45,7 +45,7 @@ def configure_metrics_timing(graph):
     Configure a timing decorator.
 
     """
-    def metrics_timing(name):
+    def metrics_timing(name, metrics_tag_mappers=None):
         """
         Create a decorator that times a specific context.
 
@@ -58,9 +58,19 @@ def configure_metrics_timing(graph):
                     return func(*args, **kwargs)
                 finally:
                     end_time = time()
+
+                    additional_parameters = dict()
+                    if metrics_tag_mappers:
+                        additional_parameters["tags"] = [
+                            tag_mapper(kwargs.get(tag_key)) if tag_mapper else kwargs.get(tag_key)
+                            for tag_key, tag_mapper in metrics_tag_mappers.items()
+                            if kwargs.get(tag_key) is not None
+                        ]
+
                     graph.metrics.histogram(
                         name_for(name, prefix=graph.metadata.name),
                         end_time - start_time,
+                        **additional_parameters
                     )
             return wrapper
         return decorator
