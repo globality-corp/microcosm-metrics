@@ -2,6 +2,7 @@
 Test decorators.
 
 """
+from os import environ
 from time import sleep
 
 from hamcrest import (
@@ -15,58 +16,65 @@ from hamcrest import (
 from microcosm.api import create_object_graph
 
 
-def test_metrics_counting():
-    """
-    Validate that the counting decorator calls increment.
+class TestDecorators(object):
 
-    """
-    graph = create_object_graph("example", testing=True)
-    graph.use(
-        "statsd",
-        "metrics_counting",
-    )
-    graph.lock()
+    def setup(self):
+        environ["MICROCOSM_ENVIRONMENT"] = "testing"
 
-    assert_that(graph.metrics_counting, is_(not_none()))
+    def teardown(self):
+        environ["MICROCOSM_ENVIRONMENT"] = ""
 
-    @graph.metrics_counting("foo")
-    def foo():
-        pass
+    def test_metrics_counting(self):
+        """
+        Validate that the counting decorator calls increment.
 
-    foo()
-    graph.metrics.increment.assert_called()
+        """
+        graph = create_object_graph("example", testing=True)
+        graph.use(
+            "statsd",
+            "metrics_counting",
+        )
+        graph.lock()
 
-    _, args, kwargs = graph.metrics.increment.mock_calls[0]
-    name, = args
+        assert_that(graph.metrics_counting, is_(not_none()))
 
-    assert_that(name, is_(equal_to("example.foo.call.count")))
-    assert_that(kwargs, is_(empty()))
+        @graph.metrics_counting("foo")
+        def foo():
+            pass
 
+        foo()
+        graph.metrics.increment.assert_called()
 
-def test_metrics_timing():
-    """
-    Validate that the timing decorator calls a histogram.
+        _, args, kwargs = graph.metrics.increment.mock_calls[0]
+        name, = args
 
-    """
-    graph = create_object_graph("example", testing=True)
-    graph.use(
-        "statsd",
-        "metrics_timing",
-    )
-    graph.lock()
+        assert_that(name, is_(equal_to("testing.example.foo.call.count")))
+        assert_that(kwargs, is_(empty()))
 
-    assert_that(graph.metrics_timing, is_(not_none()))
+    def test_metrics_timing(self):
+        """
+        Validate that the timing decorator calls a histogram.
 
-    @graph.metrics_timing("foo")
-    def foo():
-        sleep(1.0)
+        """
+        graph = create_object_graph("example", testing=True)
+        graph.use(
+            "statsd",
+            "metrics_timing",
+        )
+        graph.lock()
 
-    foo()
-    graph.metrics.histogram.assert_called()
+        assert_that(graph.metrics_timing, is_(not_none()))
 
-    _, args, kwargs = graph.metrics.histogram.mock_calls[0]
-    name, value = args
+        @graph.metrics_timing("foo")
+        def foo():
+            sleep(1.0)
 
-    assert_that(name, is_(equal_to("example.foo")))
-    assert_that(value, is_(greater_than(1.0)))
-    assert_that(kwargs, is_(empty()))
+        foo()
+        graph.metrics.histogram.assert_called()
+
+        _, args, kwargs = graph.metrics.histogram.mock_calls[0]
+        name, value = args
+
+        assert_that(name, is_(equal_to("testing.example.foo")))
+        assert_that(value, is_(greater_than(1.0)))
+        assert_that(kwargs, is_(empty()))
