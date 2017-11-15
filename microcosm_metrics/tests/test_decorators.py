@@ -48,7 +48,7 @@ class TestDecorators(object):
         _, args, kwargs = graph.metrics.increment.mock_calls[0]
         name, = args
 
-        assert_that(name, is_(equal_to("example.testing.foo.call.count")))
+        assert_that(name, is_(equal_to("testing.example.foo.call.count")))
         assert_that(kwargs, is_(empty()))
 
     def test_metrics_timing(self):
@@ -75,6 +75,6 @@ class TestDecorators(object):
         _, args, kwargs = graph.metrics.histogram.mock_calls[0]
         name, value = args
 
-        assert_that(name, is_(equal_to("example.testing.foo")))
+        assert_that(name, is_(equal_to("testing.example.foo")))
         assert_that(value, is_(greater_than(1.0)))
         assert_that(kwargs, is_(empty()))

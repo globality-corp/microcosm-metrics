@@ -17,4 +17,4 @@ def name_for(*keys, **kwargs):
     """
     prefix = kwargs.get("prefix", "microcosm")
     environment = kwargs.get("environment", "undefined")
-    return ".".join([prefix, environment] + list(keys))
+    return ".".join([environment, prefix] + list(keys))
