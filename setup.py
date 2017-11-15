@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-metrics"
-version = "0.2.2"
+version = "0.2.3"
 
 setup(
     name=project,

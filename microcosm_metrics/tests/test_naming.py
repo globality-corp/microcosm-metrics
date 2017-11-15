@@ -11,9 +11,10 @@ from hamcrest import (
 from microcosm_metrics.naming import name_for
 
 
-def test_naming():
-    assert_that(name_for("foo", "bar"), is_(equal_to("microcosm.foo.bar")))
+class TestNaming(object):
 
+    def test_naming(self):
+        assert_that(name_for("foo", "bar", environment="testing"), is_(equal_to("testing.microcosm.foo.bar")))
 
-def test_naming_prefix():
-    assert_that(name_for("foo", prefix="example"), is_(equal_to("example.foo")))
+    def test_naming_prefix(self):
+        assert_that(name_for("foo", prefix="example", environment="testing"), is_(equal_to("testing.example.foo")))
