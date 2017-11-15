@@ -27,7 +27,7 @@ def configure_metrics_counting(graph):
                 try:
                     return classifier(*args, **kwargs)
                 finally:
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "missing")
+                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     if classifier.label is not None:
                         graph.metrics.increment(
                             name_for(
@@ -61,7 +61,7 @@ def configure_metrics_timing(graph):
                     return func(*args, **kwargs)
                 finally:
                     end_time = time()
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "missing")
+                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     graph.metrics.histogram(
                         name_for(
                             name,
