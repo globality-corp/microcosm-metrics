@@ -16,7 +16,7 @@ from hamcrest import (
 from microcosm.api import create_object_graph
 
 
-class TestDecorators(object):
+class TestDecorators:
 
     def setup(self):
         environ["MICROCOSM_ENVIRONMENT"] = "testing"

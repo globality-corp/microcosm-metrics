@@ -7,7 +7,7 @@ from functools import wraps
 from microcosm_metrics.naming import CALL, FAILURE, SUCCESS
 
 
-class Classifier(object):
+class Classifier:
     """
     A classifier produces labels based on the outcomes of a wrapped function.
 
