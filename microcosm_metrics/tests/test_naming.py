@@ -11,7 +11,7 @@ from hamcrest import (
 from microcosm_metrics.naming import name_for
 
 
-class TestNaming(object):
+class TestNaming:
 
     def test_naming(self):
         assert_that(name_for("foo", "bar", environment="testing"), is_(equal_to("testing.microcosm.foo.bar")))

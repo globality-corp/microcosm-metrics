@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-metrics"
-version = "0.2.3"
+version = "1.0.0"
 
 setup(
     name=project,
@@ -16,10 +16,10 @@ setup(
     zip_safe=False,
     keywords="microcosm",
     install_requires=[
-        "datadog>=0.15.0",
-        "microcosm>=0.17.2",
-        "microcosm-logging>=0.13.0",
-        "statsd>=3.2.1",
+        "datadog>=0.17.0",
+        "microcosm>=2.0.0",
+        "microcosm-logging>=1.0.0",
+        "statsd>=3.2.2",
     ],
     setup_requires=[
         "nose>=1.3.6",
