@@ -20,6 +20,7 @@ setup(
         "microcosm>=2.0.0",
         "microcosm-logging>=1.0.0",
         "statsd>=3.2.2",
+        "pyopenssl>=0.14",
     ],
     setup_requires=[
         "nose>=1.3.6",
