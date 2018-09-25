@@ -27,15 +27,12 @@ def configure_metrics_counting(graph):
                 try:
                     return classifier(*args, **kwargs)
                 finally:
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     if classifier.label is not None:
                         graph.metrics.increment(
                             name_for(
                                 name,
                                 classifier.label,
                                 "count",
-                                prefix=graph.metadata.name,
-                                environment=environment,
                             ),
                         )
             return wrapper
@@ -61,13 +58,8 @@ def configure_metrics_timing(graph):
                     return func(*args, **kwargs)
                 finally:
                     end_time = time()
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     graph.metrics.histogram(
-                        name_for(
-                            name,
-                            prefix=graph.metadata.name,
-                            environment=environment,
-                        ),
+                        name_for(name),
                         end_time - start_time,
                     )
             return wrapper

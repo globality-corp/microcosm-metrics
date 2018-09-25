@@ -19,7 +19,6 @@ setup(
         "datadog>=0.17.0",
         "microcosm>=2.0.0",
         "microcosm-logging>=1.0.0",
-        "statsd>=3.2.2",
         "pyopenssl>=0.14",
     ],
     setup_requires=[
@@ -35,7 +34,6 @@ setup(
             "datadog_statsd = microcosm_metrics.factories:configure_datadog_statsd",
             "metrics_counting = microcosm_metrics.decorators:configure_metrics_counting",
             "metrics_timing = microcosm_metrics.decorators:configure_metrics_timing",
-            "statsd = microcosm_metrics.factories:configure_statsd",
         ],
     },
     tests_require=[

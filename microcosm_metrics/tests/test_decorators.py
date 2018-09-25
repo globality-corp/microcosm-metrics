@@ -31,7 +31,7 @@ class TestDecorators:
         """
         graph = create_object_graph("example", testing=True)
         graph.use(
-            "statsd",
+            "datadog_statsd",
             "metrics_counting",
         )
         graph.lock()
@@ -48,7 +48,7 @@ class TestDecorators:
         _, args, kwargs = graph.metrics.increment.mock_calls[0]
         name, = args
 
-        assert_that(name, is_(equal_to("testing.example.foo.call.count")))
+        assert_that(name, is_(equal_to("foo.call.count")))
         assert_that(kwargs, is_(empty()))
 
     def test_metrics_timing(self):
@@ -58,7 +58,7 @@ class TestDecorators:
         """
         graph = create_object_graph("example", testing=True)
         graph.use(
-            "statsd",
+            "datadog_statsd",
             "metrics_timing",
         )
         graph.lock()
@@ -75,6 +75,6 @@ class TestDecorators:
         _, args, kwargs = graph.metrics.histogram.mock_calls[0]
         name, value = args
 
-        assert_that(name, is_(equal_to("testing.example.foo")))
+        assert_that(name, is_(equal_to("foo")))
         assert_that(value, is_(greater_than(1.0)))
         assert_that(kwargs, is_(empty()))
