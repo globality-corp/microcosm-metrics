@@ -14,6 +14,21 @@ Designed to support [DataDog statsd](http://docs.datadoghq.com/guides/dogstatsd/
 
         graph.metrics.increment("foo")
 
+## Tags
+
+A tag for the environment will always be added:
+it will either be the value of the environment variable `MICROCOSM_ENVIRONMENT` or
+`"undefined"` if it is not defined or is empty.
+A tag for the service will always be added,
+which will be the `microcosm` object graph's `name`
+(the first argument to `create_object_graph`).
+
+Further tags can be added by controlling the configuration for
+`datadog_statsd.tags`,
+for example by defining the environment variable
+`<NAME>__DATADOG_STATSD__TAGS` to a JSON-serialized list
+and using `load_from_environ_as_json`.
+In that case, note that none of the tags are allowed to end in a `:`.
 
 ## Decorators
 
