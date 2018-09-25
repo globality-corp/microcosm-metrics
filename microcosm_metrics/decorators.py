@@ -3,7 +3,6 @@ Metrics decorators.
 
 """
 from functools import wraps
-from os import environ
 from time import time
 
 from microcosm_metrics.classifier import Classifier
