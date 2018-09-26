@@ -49,6 +49,7 @@ class TestDecorators:
         name, = args
 
         assert_that(name, is_(equal_to("foo.call.count")))
+        assert_that(kwargs.pop("tags", None), is_(None))
         assert_that(kwargs, is_(empty()))
 
     def test_metrics_timing(self):
@@ -77,4 +78,5 @@ class TestDecorators:
 
         assert_that(name, is_(equal_to("foo")))
         assert_that(value, is_(greater_than(1.0)))
+        assert_that(kwargs.pop("tags", None), is_(None))
         assert_that(kwargs, is_(empty()))
