@@ -10,11 +10,9 @@ IGNORE = "ignore"
 SUCCESS = "success"
 
 
-def name_for(*keys, **kwargs):
+def name_for(*keys):
     """
     Concatenate a metric name.
 
     """
-    prefix = kwargs.get("prefix", "microcosm")
-    environment = kwargs.get("environment", "undefined")
-    return ".".join([environment, prefix] + list(keys))
+    return ".".join(keys)

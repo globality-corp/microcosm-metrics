@@ -12,24 +12,6 @@ from hamcrest import (
 from microcosm.api import create_object_graph
 
 
-def test_statsd():
-    """
-    Assert that factory returns something.
-
-    Note that during unit tests, the result will be a MagicMock.
-
-    """
-    graph = create_object_graph("example", testing=True)
-    graph.use("statsd")
-    graph.lock()
-
-    assert_that(graph.statsd, is_(not_none()))
-    assert_that(graph.metrics, is_(not_none()))
-
-    assert_that(graph.metrics.host, is_(equal_to("localhost")))
-    assert_that(graph.metrics.port, is_(equal_to(8125)))
-
-
 def test_datadog_statsd():
     """
     Assert that factory returns something.
@@ -46,4 +28,4 @@ def test_datadog_statsd():
 
     assert_that(graph.metrics.host, is_(equal_to("localhost")))
     assert_that(graph.metrics.port, is_(equal_to(8125)))
-    assert_that(graph.metrics.constant_tags, contains("example"))
+    assert_that(graph.metrics.constant_tags, contains("service:example", "environment:undefined"))

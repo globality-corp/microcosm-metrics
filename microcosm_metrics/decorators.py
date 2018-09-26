@@ -3,7 +3,6 @@ Metrics decorators.
 
 """
 from functools import wraps
-from os import environ
 from time import time
 
 from microcosm_metrics.classifier import Classifier
@@ -15,7 +14,7 @@ def configure_metrics_counting(graph):
     Configure a counting decorator.
 
     """
-    def metrics_counting(name, classifier_cls=Classifier):
+    def metrics_counting(name, tags=None, classifier_cls=Classifier):
         """
         Create a decorator that counts a specific context.
 
@@ -27,16 +26,14 @@ def configure_metrics_counting(graph):
                 try:
                     return classifier(*args, **kwargs)
                 finally:
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     if classifier.label is not None:
                         graph.metrics.increment(
                             name_for(
                                 name,
                                 classifier.label,
                                 "count",
-                                prefix=graph.metadata.name,
-                                environment=environment,
                             ),
+                            tags=tags,
                         )
             return wrapper
         return decorator
@@ -48,7 +45,7 @@ def configure_metrics_timing(graph):
     Configure a timing decorator.
 
     """
-    def metrics_timing(name):
+    def metrics_timing(name, tags=None):
         """
         Create a decorator that times a specific context.
 
@@ -61,14 +58,10 @@ def configure_metrics_timing(graph):
                     return func(*args, **kwargs)
                 finally:
                     end_time = time()
-                    environment = environ.get("MICROCOSM_ENVIRONMENT", "undefined")
                     graph.metrics.histogram(
-                        name_for(
-                            name,
-                            prefix=graph.metadata.name,
-                            environment=environment,
-                        ),
+                        name_for(name),
                         end_time - start_time,
+                        tags=tags,
                     )
             return wrapper
         return decorator
