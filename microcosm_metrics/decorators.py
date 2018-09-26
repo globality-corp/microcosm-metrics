@@ -14,7 +14,7 @@ def configure_metrics_counting(graph):
     Configure a counting decorator.
 
     """
-    def metrics_counting(name, classifier_cls=Classifier):
+    def metrics_counting(name, tags=None, classifier_cls=Classifier):
         """
         Create a decorator that counts a specific context.
 
@@ -33,6 +33,7 @@ def configure_metrics_counting(graph):
                                 classifier.label,
                                 "count",
                             ),
+                            tags=tags,
                         )
             return wrapper
         return decorator
@@ -44,7 +45,7 @@ def configure_metrics_timing(graph):
     Configure a timing decorator.
 
     """
-    def metrics_timing(name):
+    def metrics_timing(name, tags=None):
         """
         Create a decorator that times a specific context.
 
@@ -60,6 +61,7 @@ def configure_metrics_timing(graph):
                     graph.metrics.histogram(
                         name_for(name),
                         end_time - start_time,
+                        tags=tags,
                     )
             return wrapper
         return decorator
