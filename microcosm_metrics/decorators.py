@@ -14,6 +14,7 @@ def configure_metrics_counting(graph):
     Configure a counting decorator.
 
     """
+    graph.use("datadog_statsd")
     def metrics_counting(name, tags=None, classifier_cls=Classifier):
         """
         Create a decorator that counts a specific context.
@@ -45,6 +46,7 @@ def configure_metrics_timing(graph):
     Configure a timing decorator.
 
     """
+    graph.use("datadog_statsd")
     def metrics_timing(name, tags=None):
         """
         Create a decorator that times a specific context.
