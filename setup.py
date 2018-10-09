@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-metrics"
-version = "2.0.0"
+version = "2.1.0"
 
 setup(
     name=project,
@@ -32,6 +32,7 @@ setup(
         ],
         "microcosm.factories": [
             "datadog_statsd = microcosm_metrics.factories:configure_datadog_statsd",
+            "metrics = microcosm_metrics.factories:configure_metrics",
             "metrics_counting = microcosm_metrics.decorators:configure_metrics_counting",
             "metrics_timing = microcosm_metrics.decorators:configure_metrics_timing",
         ],
