@@ -26,6 +26,7 @@ def configure_datadog_statsd(graph):
     metrics = configure_metrics(graph, 'datadog_statsd')
     return graph.assign("metrics", metrics)
 
+
 @defaults(
     host="localhost",
     port=8125,
