@@ -14,7 +14,7 @@ def configure_metrics_counting(graph):
     Configure a counting decorator.
 
     """
-    graph.use("datadog_statsd")
+    graph.use("metrics")
 
     def metrics_counting(name, tags=None, classifier_cls=Classifier):
         """
@@ -47,7 +47,7 @@ def configure_metrics_timing(graph):
     Configure a timing decorator.
 
     """
-    graph.use("datadog_statsd")
+    graph.use("metrics")
 
     def metrics_timing(name, tags=None):
         """

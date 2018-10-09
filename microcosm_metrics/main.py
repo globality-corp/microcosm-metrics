@@ -21,12 +21,12 @@ def parse_args():
 
 def create_statsd_client(args):
     loader = load_from_dict(dict(
-        datadog_statsd=dict(
+        metrics=dict(
             host=args.host,
         ),
     ))
     graph = create_object_graph("example", loader=loader)
-    graph.use("datadog_statsd")
+    graph.use("metrics")
     graph.lock()
 
     return graph.metrics
