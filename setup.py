@@ -32,6 +32,7 @@ setup(
         ],
         "microcosm.factories": [
             "datadog_statsd = microcosm_metrics.factories:configure_datadog_statsd",
+            "metrics = microcosm_metrics.factories:configure_metrics",
             "metrics_counting = microcosm_metrics.decorators:configure_metrics_counting",
             "metrics_timing = microcosm_metrics.decorators:configure_metrics_timing",
         ],

@@ -3,6 +3,7 @@ Factories for statsd/metrics clients.
 
 """
 from os import environ
+from warnings import warn
 
 from datadog import DogStatsd
 from microcosm.api import defaults
@@ -15,8 +16,25 @@ from microcosm.api import defaults
 )
 def configure_datadog_statsd(graph):
     """
-    Create a DataDog statsd client.
+    Deprecated: use `configure_metrics`
+    """
+    warn(
+        "Deprecated: use configure_metrics instead",
+        DeprecationWarning,
+    )
 
+    metrics = configure_metrics(graph, 'datadog_statsd')
+    return graph.assign("metrics", metrics)
+
+
+@defaults(
+    host="localhost",
+    port=8125,
+    tags=[],
+)
+def configure_metrics(graph, configuration='metrics'):
+    """
+    Create a DataDog-extension-based statsd client.
     """
     if graph.metadata.testing:
         from mock import MagicMock
@@ -24,16 +42,18 @@ def configure_datadog_statsd(graph):
     else:
         cls = DogStatsd
 
+    config = getattr(graph.config, configuration)
+
     statsd = cls(
-        host=graph.config.datadog_statsd.host,
-        port=graph.config.datadog_statsd.port,
+        host=config.host,
+        port=config.port,
         constant_tags=[
             "service:" + graph.metadata.name,
             # An empty string is *not* a valid value: tags cannot end with a colon.
             # An environment variable can be set to an empty string. We force empty strings
             # into "undefined".
             "environment:" + (environ.get("MICROCOSM_ENVIRONMENT", "") or "undefined")
-        ] + graph.config.datadog_statsd.tags,
+        ] + config.tags,
     )
 
-    return graph.assign("metrics", statsd)
+    return statsd
