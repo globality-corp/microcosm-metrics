@@ -4,6 +4,7 @@ Factories for statsd/metrics clients.
 """
 from os import environ
 from warnings import warn
+from unittest.mock import MagicMock
 
 from datadog import DogStatsd
 from microcosm.api import defaults
@@ -37,7 +38,6 @@ def configure_metrics(graph, configuration='metrics'):
     Create a DataDog-extension-based statsd client.
     """
     if graph.metadata.testing:
-        from mock import MagicMock
         cls = MagicMock
     else:
         cls = DogStatsd
