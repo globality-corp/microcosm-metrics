@@ -3,7 +3,6 @@ Factories for statsd/metrics clients.
 
 """
 from os import environ
-from warnings import warn
 from unittest.mock import MagicMock
 
 from datadog import DogStatsd
@@ -15,25 +14,7 @@ from microcosm.api import defaults
     port=8125,
     tags=[],
 )
-def configure_datadog_statsd(graph):
-    """
-    Deprecated: use `configure_metrics`
-    """
-    warn(
-        "Deprecated: use configure_metrics instead",
-        DeprecationWarning,
-    )
-
-    metrics = configure_metrics(graph, 'datadog_statsd')
-    return graph.assign("metrics", metrics)
-
-
-@defaults(
-    host="localhost",
-    port=8125,
-    tags=[],
-)
-def configure_metrics(graph, configuration='metrics'):
+def configure_metrics(graph, configuration="metrics"):
     """
     Create a DataDog-extension-based statsd client.
     """

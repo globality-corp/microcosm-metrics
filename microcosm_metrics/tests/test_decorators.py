@@ -32,7 +32,7 @@ class TestDecorators:
         """
         graph = create_object_graph("example", testing=True)
         graph.use(
-            "datadog_statsd",
+            "metrics",
             "metrics_counting",
         )
         graph.lock()
@@ -60,7 +60,7 @@ class TestDecorators:
         """
         graph = create_object_graph("example", testing=True)
         graph.use(
-            "datadog_statsd",
+            "metrics",
             "metrics_timing",
         )
         graph.lock()
