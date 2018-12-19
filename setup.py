@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from setuptools import find_packages, setup
 
-project = "microcosm-metrics"
+project = "microcosm-metrics>=2.2.0"
 version = "2.2.0"
 
 setup(
