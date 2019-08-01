@@ -10,7 +10,6 @@ from hamcrest import (
     close_to,
     empty,
     equal_to,
-    greater_than,
     is_,
     none,
     not_none,
