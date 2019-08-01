@@ -7,6 +7,7 @@ from time import sleep
 
 from hamcrest import (
     assert_that,
+    close_to,
     empty,
     equal_to,
     greater_than,
@@ -78,6 +79,6 @@ class TestDecorators:
         name, value = args
 
         assert_that(name, is_(equal_to("foo")))
-        assert_that(value, is_(greater_than(1.0)))
+        assert_that(value, is_(close_to(1000, 100)))
         assert_that(kwargs.pop("tags", None), is_(none()))
         assert_that(kwargs, is_(empty()))
