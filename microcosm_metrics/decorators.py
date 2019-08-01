@@ -64,7 +64,7 @@ def configure_metrics_timing(graph):
                     end_time = time()
                     graph.metrics.histogram(
                         name_for(name),
-                        end_time - start_time,
+                        (end_time - start_time) * 1000,
                         tags=tags,
                     )
             return wrapper
