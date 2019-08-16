@@ -21,6 +21,9 @@ def configure_metrics_counting(graph):
         Create a decorator that counts a specific context.
 
         """
+        if tags is None:
+            tags = []
+
         def decorator(func):
             @wraps(func)
             def wrapper(*args, **kwargs):
@@ -29,8 +32,7 @@ def configure_metrics_counting(graph):
                     return classifier(*args, **kwargs)
                 finally:
                     if classifier.label is not None:
-                        if tags is not None:
-                            tags.append(f"classifier:{classifier.label}")
+                        tags.append(f"classifier:{classifier.label}")
                         graph.metrics.increment(
                             name_for(
                                 name,
