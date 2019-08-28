@@ -50,7 +50,7 @@ class TestDecorators:
         name, = args
 
         assert_that(name, is_(equal_to("foo.call.count")))
-        assert_that(kwargs.pop("tags", None), is_(none()))
+        assert_that(kwargs.pop("tags", None), is_(equal_to(['classifier:call'])))
         assert_that(kwargs, is_(empty()))
 
     def test_metrics_timing(self):

@@ -47,7 +47,7 @@ To count function outcomes, use:
         pass
 
 For counting, the default behavior is to count function *calls*. To count different outcomes,
-use a custom `Classifier`:
+use a custom `Classifier`. The classifier *only* adds a single tag called `classifier` and no longer modifies the metric key.
 
     class TruthyClassifier(Classifier):
 
@@ -63,6 +63,7 @@ Then pass the classifier class to the counting decorator:
     def my_func():
         pass
 
+Again, the classifier no longer modifies the metric key and only adds a single tag called `classifier`.
 
 ## StatsD Testing
 
