@@ -44,14 +44,17 @@ class TestDecorators:
             pass
 
         foo()
+        foo()
         graph.metrics.increment.assert_called()
+        assert_that(graph.metrics.increment.call_count, is_(2))
 
-        _, args, kwargs = graph.metrics.increment.mock_calls[0]
-        name, = args
+        for call in graph.metrics.increment.mock_calls:
+            _, args, kwargs = call
+            name, = args
 
-        assert_that(name, is_(equal_to("foo.call.count")))
-        assert_that(kwargs.pop("tags", None), is_(equal_to(['classifier:call'])))
-        assert_that(kwargs, is_(empty()))
+            assert_that(name, is_(equal_to("foo.call.count")))
+            assert_that(kwargs.pop("tags", None), is_(equal_to(['classifier:call'])))
+            assert_that(kwargs, is_(empty()))
 
     def test_metrics_timing(self):
         """
