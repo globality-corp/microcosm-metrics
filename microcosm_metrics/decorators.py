@@ -32,14 +32,13 @@ def configure_metrics_counting(graph):
                     return classifier(*args, **kwargs)
                 finally:
                     if classifier.label is not None:
-                        tags.append(f"classifier:{classifier.label}")
                         graph.metrics.increment(
                             name_for(
                                 name,
                                 "call",
                                 "count",
                             ),
-                            tags=tags,
+                            tags=tags + [f"classifier:{classifier.label}"],
                         )
             return wrapper
         return decorator
