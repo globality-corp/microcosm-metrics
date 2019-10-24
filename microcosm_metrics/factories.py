@@ -30,7 +30,7 @@ def configure_metrics(graph, configuration="metrics"):
         host=config.host,
         port=config.port,
         constant_tags=[
-            f"service:{metric_service_name}"
+            f"service:{metric_service_name}",
             # An empty string is *not* a valid value: tags cannot end with a colon.
             # An environment variable can be set to an empty string. We force empty strings
             # into "undefined".
