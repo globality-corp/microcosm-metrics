@@ -2,11 +2,7 @@
 Naming tests.
 
 """
-from hamcrest import (
-    assert_that,
-    equal_to,
-    is_,
-)
+from hamcrest import assert_that, equal_to, is_
 
 from microcosm_metrics.naming import name_for
 
