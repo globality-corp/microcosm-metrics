@@ -5,15 +5,8 @@ Test decorators.
 from os import environ
 from time import sleep
 
-from hamcrest import (
-    assert_that,
-    close_to,
-    empty,
-    equal_to,
-    is_,
-    none,
-    not_none,
-)
+from hamcrest import (assert_that, close_to, empty, equal_to, is_, none,
+                      not_none)
 from microcosm.api import create_object_graph
 
 

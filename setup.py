@@ -2,7 +2,7 @@
 from setuptools import find_packages, setup
 
 project = "microcosm-metrics"
-version = "2.5.1"
+version = "3.0.0"
 
 setup(
     name=project,
@@ -18,12 +18,25 @@ setup(
     keywords="microcosm",
     install_requires=[
         "datadog>=0.26.0",
-        "microcosm>=2.12.0",
-        "microcosm-logging>=1.3.0",
+        "microcosm>=4.0.0",
+        "microcosm-logging>=2.0.0",
         "pyopenssl>=18.0.0",
     ],
+    extras_require={
+        "test": [
+            "PyHamcrest",
+            "pytest-cov",
+            "pytest",
+            "sentry-sdk",
+        ],
+        "lint": [
+            "flake8",
+        ],
+        "typehinting": [
+            "mypy",
+        ],
+    },
     setup_requires=[
-        "nose>=1.3.7",
     ],
     dependency_links=[
     ],
@@ -40,5 +53,6 @@ setup(
     tests_require=[
         "coverage>=3.7.1",
         "PyHamcrest>=1.9.0",
+        "pytest-cov>=5.0.0",
     ],
 )
