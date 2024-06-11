@@ -2,14 +2,7 @@
 Test result classification.
 
 """
-from hamcrest import (
-    assert_that,
-    calling,
-    equal_to,
-    is_,
-    none,
-    raises,
-)
+from hamcrest import assert_that, calling, equal_to, is_, none, raises
 
 from microcosm_metrics.classifier import Classifier, FailOnErrorClassifier
 from microcosm_metrics.naming import CALL, FAILURE, SUCCESS

@@ -1,7 +1,10 @@
 {
   "params": {
-    "name": "microcosm-metrics"
+    "name": "microcosm-metrics",
+    "pypi": {
+      "repository": "pypi"
+    }
   },
   "type": "python-library",
-  "version": "2.0.36"
+  "version": "2024.52.0"
 }
